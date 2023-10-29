@@ -9,8 +9,5 @@ config :masque, Masque.Test.Repo,
   url: System.get_env("DATABASE_URL", "postgres://localhost:5432/masque_test")
 
 config :masque,
-  ecto_repos: [Masque.Test.Repo]
-
-config :ex_json_schema,
-       :remote_schema_resolver,
-       {Masque.Resolvers.Basic, :resolve}
+  ecto_repos: [Masque.Test.Repo],
+  resolver: Masque.Resolvers.Basic
