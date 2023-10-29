@@ -25,11 +25,12 @@ defmodule Masque.ContentType do
 
   defp maybe_put_schema_id(changeset) do
     name = Ecto.Changeset.get_change(changeset, :name)
+    version = Ecto.Changeset.get_change(changeset, :version)
 
     schema =
       changeset
       |> Ecto.Changeset.get_change(:schema)
-      |> Map.put(:"$id", "/schemas/#{name}")
+      |> Map.put(:"$id", "/schemas/#{name}/v#{version}")
 
     Ecto.Changeset.put_change(changeset, :schema, schema)
   end

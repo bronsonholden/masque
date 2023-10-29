@@ -7,10 +7,10 @@ defmodule Masque.ContentTypeTest do
   describe "create a ContentType" do
     test "with valid attributes" do
       assert {:ok, content_type} =
-               ContentType.new(%{name: "first_name", schema: %{type: "string"}})
+               ContentType.new(%{name: "first_name", version: 1, schema: %{type: "string"}})
                |> Repo.insert()
 
-      assert Map.get(content_type.schema, :"$id")
+      assert Map.get(content_type.schema, :"$id") == "/schemas/first_name/v1"
     end
 
     test "with invalid attributes" do
