@@ -21,6 +21,16 @@ defmodule Masque.ContentItem do
     timestamps()
   end
 
+  @doc """
+  Build a new content item struct for a content type with the given attributes. By
+  default, content items are built as unpublished. Use `published/2` to publish an
+  item on insertion.
+
+  ## Examples
+
+      iex> new(content_type, %{data: %{"name" => "Jane Roe"}})
+      %ContentItem{}
+  """
   def new(content_type, attrs) do
     {_, attrs} =
       Map.get_and_update(attrs, :data, fn
@@ -35,13 +45,8 @@ defmodule Masque.ContentItem do
     |> validate_content_type_schema(content_type)
   end
 
-  def changeset(content_item, attrs) do
-    content_item
-    |> cast(attrs, [:published_at])
-  end
-
-  def publish_changeset(content_item, at) do
-    cast(content_item, %{published_at: at}, [:published_at])
+  def published(content_item_or_changeset, at \\ DateTime.utc_now()) do
+    cast(content_item_or_changeset, %{published_at: at}, [:published_at])
   end
 
   defp put_schema_uri(changeset, content_type) do

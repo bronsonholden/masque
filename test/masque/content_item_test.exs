@@ -14,15 +14,26 @@ defmodule Masque.ContentItemTest do
 
   describe "create a ContentItem" do
     test "with valid data", %{content_type: content_type} do
-      assert {:ok, _} =
+      assert {:ok, content_item} =
                ContentItem.new(content_type, %{data: "John"})
                |> Repo.insert()
+
+      refute content_item.published_at
     end
 
     test "with invalid attributes", %{content_type: content_type} do
       assert {:error, _} =
                ContentItem.new(content_type, %{data: 123})
                |> Repo.insert()
+    end
+
+    test "as published", %{content_type: content_type} do
+      assert {:ok, content_item} =
+               ContentItem.new(content_type, %{data: "Jane"})
+               |> ContentItem.published()
+               |> Repo.insert()
+
+      assert content_item.published_at
     end
   end
 end

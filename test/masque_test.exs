@@ -32,7 +32,7 @@ defmodule Masque.Test do
     end
   end
 
-  describe "get_content_items_by_schema_id/1" do
+  describe "list_content_items/1" do
     setup %{content_type: content_type} do
       {:ok, content_item} =
         ContentItem.new(content_type, %{data: %{"first_name" => "John", "last_name" => "Doe"}})
@@ -46,11 +46,43 @@ defmodule Masque.Test do
       content_type: content_type
     } do
       id = Map.get(content_type.schema, "$id")
-      assert Masque.get_content_items_by_schema_id(id) == [content_item]
+      assert Masque.list_content_items(id) == [content_item]
     end
 
     test "returns no results for invalid schema ID" do
-      assert Masque.get_content_items_by_schema_id("/schemas/businesses/v1") == []
+      assert Masque.list_content_items("/schemas/businesses/v1") == []
+    end
+  end
+
+  describe "publish/1" do
+    setup %{content_type: content_type} do
+      {:ok, content_item} =
+        ContentItem.new(content_type, %{data: %{"first_name" => "John", "last_name" => "Doe"}})
+        |> Repo.insert()
+
+      %{content_item: content_item}
+    end
+
+    test "publishes at current time", %{
+      content_item: content_item,
+      content_type: content_type
+    } do
+      assert {:ok, content_item} = Masque.publish(content_item)
+
+      id = Map.get(content_type.schema, "$id")
+      assert Masque.list_published_content_items(id) == [content_item]
+    end
+
+    test "publishes at future time", %{
+      content_item: content_item,
+      content_type: content_type
+    } do
+      at = DateTime.utc_now() |> DateTime.add(1, :day)
+      assert {:ok, content_item} = Masque.publish(content_item, at)
+
+      id = Map.get(content_type.schema, "$id")
+      assert Masque.list_published_content_items(id) == []
+      assert Masque.list_published_content_items(id, at) == [content_item]
     end
   end
 end
