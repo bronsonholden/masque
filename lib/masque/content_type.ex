@@ -23,6 +23,9 @@ defmodule Masque.ContentType do
     timestamps()
   end
 
+  @spec schema_id(ContentType.t()) :: String.t()
+  def schema_id(content_type), do: Map.get(content_type.schema, "$id")
+
   def new(attrs \\ %{}) do
     %__MODULE__{}
     |> cast(attrs, [:name, :schema, :version])
