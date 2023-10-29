@@ -1,4 +1,5 @@
 Application.ensure_all_started(:postgrex)
 Masque.Test.Repo.start_link()
+Application.put_env(:masque, :repo, Masque.Test.Repo)
 ExUnit.start()
 Ecto.Adapters.SQL.Sandbox.mode(Masque.Test.Repo, :manual)

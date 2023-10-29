@@ -10,3 +10,7 @@ config :masque, Masque.Test.Repo,
 
 config :masque,
   ecto_repos: [Masque.Test.Repo]
+
+config :ex_json_schema,
+       :remote_schema_resolver,
+       {Masque.Resolvers.Basic, :resolve}
