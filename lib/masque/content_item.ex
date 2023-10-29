@@ -45,6 +45,15 @@ defmodule Masque.ContentItem do
     |> validate_content_type_schema(content_type)
   end
 
+  @doc """
+  Create a changeset for the given content item or changeset to publish it
+  at the given time.
+
+  ## Examples
+
+      iex> published(content_item)
+      %Ecto.Changeset{}
+  """
   def published(content_item_or_changeset, at \\ DateTime.utc_now()) do
     cast(content_item_or_changeset, %{published_at: at}, [:published_at])
   end

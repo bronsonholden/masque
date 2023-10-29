@@ -23,9 +23,26 @@ defmodule Masque.ContentType do
     timestamps()
   end
 
+  @doc """
+  Get the schema `$id` for the given content type.
+
+  ## Examples
+
+      iex> schema_id(content_type)
+      "/schemas/people/v1"
+  """
   @spec schema_id(ContentType.t()) :: String.t()
   def schema_id(content_type), do: Map.get(content_type.schema, "$id")
 
+  @doc """
+  Build a new content type struct with the given attributes.
+
+  ## Examples
+
+      iex> new(%{name: "people", schema: %{...}, version: 1})
+      %ContentType{}
+  """
+  @spec new(map()) :: ContentType.t()
   def new(attrs \\ %{}) do
     %__MODULE__{}
     |> cast(attrs, [:name, :schema, :version])
