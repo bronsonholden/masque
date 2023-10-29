@@ -1,5 +1,5 @@
 defmodule Masque do
-  alias Masque.ContentType
+  alias Masque.{ContentItem, ContentType}
 
   import Ecto.Query
 
@@ -10,5 +10,12 @@ defmodule Masque do
 
     from(c in ContentType, where: c.name == ^name and c.version == ^version)
     |> repo.one()
+  end
+
+  def get_content_items_by_schema_id(id) do
+    repo = Application.get_env(:masque, :repo)
+
+    from(c in ContentItem, where: c.uri == ^id)
+    |> repo.all()
   end
 end

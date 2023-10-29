@@ -11,10 +11,20 @@ defmodule Masque.Migrations.Postgres do
       timestamps()
     end
 
+    create table(:masque_content_items, primary_key: false) do
+      add(:id, :binary_id, primary_key: true)
+      add(:uri, :string)
+      add(:data, :jsonb)
+      add(:published_at, :utc_datetime)
+
+      timestamps()
+    end
+
     create(unique_index(:masque_content_types, [:name, :version]))
   end
 
   def down() do
     drop_if_exists(table(:masque_content_types))
+    drop_if_exists(table(:masque_content_items))
   end
 end

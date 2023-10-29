@@ -5,8 +5,8 @@ defmodule Masque.ValidatorTest do
   alias Masque.Test.Repo
 
   setup do
-    {:ok, %{schema: %{"$id": id}}} =
-      ContentType.new(%{name: "name", version: 1, schema: %{type: "string"}})
+    {:ok, %{schema: %{"$id" => id}}} =
+      ContentType.new(%{name: "name", version: 1, schema: %{"type" => "string"}})
       |> Repo.insert()
 
     {:ok, people} =
@@ -14,12 +14,12 @@ defmodule Masque.ValidatorTest do
         name: "people",
         version: 1,
         schema: %{
-          type: "object",
-          properties: %{
-            first_name: %{"$ref": id},
-            last_name: %{"$ref": id}
+          "type" => "object",
+          "properties" => %{
+            "first_name" => %{"$ref" => id},
+            "last_name" => %{"$ref" => id}
           },
-          required: ["first_name", "last_name"]
+          "required" => ["first_name", "last_name"]
         }
       })
       |> Repo.insert()

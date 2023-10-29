@@ -6,13 +6,10 @@ defmodule Masque.Validator do
     content_type
     |> stringified_schema()
     |> ExJsonSchema.Schema.resolve()
-    |> ExJsonSchema.Validator.validate(payload, error_formatter: false)
+    |> ExJsonSchema.Validator.validate(payload)
     |> case do
-      :ok ->
-        :ok
-
-      {:error, _errors} ->
-        {:error, "Invalid schema"}
+      :ok -> :ok
+      {:error, errors} -> {:error, errors}
     end
   end
 
