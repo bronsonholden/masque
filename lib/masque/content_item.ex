@@ -35,6 +35,15 @@ defmodule Masque.ContentItem do
     |> validate_content_type_schema(content_type)
   end
 
+  def changeset(content_item, attrs) do
+    content_item
+    |> cast(attrs, [:published_at])
+  end
+
+  def publish_changeset(content_item, at) do
+    cast(content_item, %{published_at: at}, [:published_at])
+  end
+
   defp put_schema_uri(changeset, content_type) do
     Ecto.Changeset.put_change(
       changeset,

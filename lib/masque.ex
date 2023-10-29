@@ -18,4 +18,12 @@ defmodule Masque do
     from(c in ContentItem, where: c.uri == ^id)
     |> repo.all()
   end
+
+  def publish(content_item, at \\ DateTime.utc_now()) do
+    repo = Application.get_env(:masque, :repo)
+
+    content_item
+    |> ContentItem.publish_changeset(at)
+    |> repo.update()
+  end
 end
