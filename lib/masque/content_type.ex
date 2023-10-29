@@ -9,13 +9,14 @@ defmodule Masque.ContentType do
   schema "masque_content_types" do
     field(:schema, :map)
     field(:name, :string)
+    field(:version, :integer)
     timestamps()
   end
 
   def new(attrs \\ %{}) do
     %__MODULE__{}
-    |> cast(attrs, [:name, :schema])
-    |> validate_required([:name, :schema])
+    |> cast(attrs, [:name, :schema, :version])
+    |> validate_required([:name, :schema, :version])
     |> validate_format(:name, ~r/[a-z_-]/)
     |> maybe_put_schema_id()
   end
