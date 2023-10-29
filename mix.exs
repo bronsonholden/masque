@@ -31,7 +31,8 @@ defmodule Masque.MixProject do
     [
       {:ecto_sql, "~> 3.6"},
       {:jason, "~> 1.1"},
-      {:postgrex, "~> 0.16"}
+      {:postgrex, "~> 0.16"},
+      {:ex_json_schema, "~> 0.10"}
     ]
   end
 
