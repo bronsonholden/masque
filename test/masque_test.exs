@@ -23,7 +23,7 @@ defmodule Masque.Test do
 
   describe "get_content_type_by_schema_id/1" do
     test "returns matching content type", %{content_type: content_type} do
-      id = ContentType.schema_id(content_type)
+      id = Map.get(content_type.schema, "$id")
       assert Masque.get_content_type_by_schema_id(id) == content_type
     end
 
@@ -45,7 +45,7 @@ defmodule Masque.Test do
       content_item: content_item,
       content_type: content_type
     } do
-      id = ContentType.schema_id(content_type)
+      id = Map.get(content_type.schema, "$id")
       assert Masque.list_content_items(id) == [content_item]
     end
 
@@ -69,7 +69,7 @@ defmodule Masque.Test do
     } do
       assert {:ok, content_item} = Masque.publish(content_item)
 
-      id = ContentType.schema_id(content_type)
+      id = Map.get(content_type.schema, "$id")
       assert Masque.list_published_content_items(id) == [content_item]
     end
 
@@ -80,7 +80,7 @@ defmodule Masque.Test do
       at = DateTime.utc_now() |> DateTime.add(1, :day)
       assert {:ok, content_item} = Masque.publish(content_item, at)
 
-      id = ContentType.schema_id(content_type)
+      id = Map.get(content_type.schema, "$id")
       assert Masque.list_published_content_items(id) == []
       assert Masque.list_published_content_items(id, at) == [content_item]
     end
