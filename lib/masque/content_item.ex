@@ -14,7 +14,9 @@ defmodule Masque.ContentItem do
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "masque_content_items" do
     field(:uri, :string)
+    field(:title, :string)
     field(:data, :map)
+    field(:description, :string)
     field(:published_at, :utc_datetime)
     timestamps()
   end
@@ -27,7 +29,7 @@ defmodule Masque.ContentItem do
       end)
 
     %__MODULE__{}
-    |> cast(attrs, [:data])
+    |> cast(attrs, [:data, :description, :title])
     |> put_schema_uri(content_type)
     |> validate_required([:uri, :data])
     |> validate_content_type_schema(content_type)

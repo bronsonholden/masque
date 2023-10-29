@@ -13,8 +13,10 @@ defmodule Masque.Migrations.Postgres do
 
     create table(:masque_content_items, primary_key: false) do
       add(:id, :binary_id, primary_key: true)
+      add(:title, :string)
       add(:uri, :string)
       add(:data, :jsonb)
+      add(:description, :string)
       add(:published_at, :utc_datetime)
 
       timestamps()
