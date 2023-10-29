@@ -1,0 +1,2 @@
+defmodule Masque do
+end
