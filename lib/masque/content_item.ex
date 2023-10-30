@@ -29,7 +29,7 @@ defmodule Masque.ContentItem do
   ## Examples
 
       iex> new(content_type, %{data: %{"name" => "Jane Roe"}})
-      %ContentItem{}
+      %Ecto.Changeset{}
   """
   def new(content_type, attrs) do
     {_, attrs} =
