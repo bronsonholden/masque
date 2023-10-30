@@ -35,7 +35,7 @@ defmodule Masque.ContentItem do
     {_, attrs} =
       Map.get_and_update(attrs, :data, fn
         nil -> {nil, %{"root" => nil}}
-        data -> {data, %{"root" => data}}
+        data -> {data, %{"root" => Masque.Normalizer.normalize(data)}}
       end)
 
     %__MODULE__{}
