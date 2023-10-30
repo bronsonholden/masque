@@ -37,7 +37,11 @@ defmodule Masque.NormalizerTest do
 
       assert Masque.Normalizer.normalize(data) == %{
                "name" => "ACME, Inc.",
-               "owner" => %{"first_name" => "John", "last_name" => "Doe"}
+               "owner" => %{
+                 "first_name" => "John",
+                 "last_name" => "Doe",
+                 "$content_item" => person.id
+               }
              }
     end
   end
