@@ -36,7 +36,7 @@ defmodule Masque.ContentItemTest do
     %{people: people, companies: companies}
   end
 
-  describe "create a ContentItem" do
+  describe "new/2" do
     test "with valid data", %{people: people} do
       assert {:ok, content_item} =
                ContentItem.new(people, %{data: %{"first_name" => "John"}})
