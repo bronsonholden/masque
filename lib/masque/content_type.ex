@@ -5,12 +5,8 @@ defmodule Masque.ContentType do
 
   @timestamps_opts [type: :utc_datetime]
 
-  @typep schema_atom :: String.t() | integer() | boolean() | nil
-  @typep schema_term :: schema_atom() | [schema_atom()]
-  @typep schema :: %{String.t() => schema_term()} | schema_term()
-
   @type t :: %__MODULE__{
-          schema: schema(),
+          schema: map(),
           name: String.t(),
           version: pos_integer()
         }
